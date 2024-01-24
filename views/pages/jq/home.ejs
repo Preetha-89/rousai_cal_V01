@@ -1,0 +1,187 @@
+<%- include("../../partials/header") -%>
+
+    <body class="hold-transition login-page">
+        <div class="container-fluid">
+
+            <div class="row">
+                <!--Start  LEFT: Main calendar  -->
+                <div class="col-lg-6 col-6">
+                    <div class="card">
+                        <div class="card-body pt-0">
+                            <div class="row mainTitleRow">
+                                <div class="col-lg-12 col-12 titleCol">
+                                    <p class="page-title">
+                                        今日も一日、ご安全に！！
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row monthSelRow month-selector mb-1">
+                                <div class="col-lg-1 col-1"></div>
+                                <div class="col-lg-1 col-1">
+                                    <button class="prevBtn btn btn-outline-info btn-sm">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </button>
+                                </div>
+
+                                <div class="col-lg-8 col-8 dateNow">
+                                    <div class="display-month">
+                                        <span class="year">2023</span>
+                                        <span>年</span>
+                                        <span class="month">04</span>
+                                        <span>月 </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-1 col-1">
+                                    <button class="nextBtn btn btn-outline-info btn-sm">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                                <div class="col-lg-1 col-1"></div>
+                            </div>
+
+                            <div class="row plusCalRow">
+                                <div class="col-lg-12 col-12">
+                                    <%-include('mainCal') %>
+                                </div>
+                            </div>
+
+                            <div class="row guideRow">
+                                <div class="col-lg-4 col-4">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <svg class="guide-rect">
+                                                <rect width="180" height="100"
+                                                    style="fill:rgb(23, 134, 41);stroke-width:3;stroke:rgb(0,0,0)" />
+                                            </svg>
+                                        </div>
+                                        <p class="guide-text">無災災害日</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-4">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <svg class="guide-rect">
+                                                <rect width="180" height="100"
+                                                    style="fill:rgb(208, 43, 43);stroke-width:3;stroke:rgb(0,0,0)" />
+                                            </svg>
+                                        </div>
+                                        <p class="guide-text">休業災害日</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-4">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <svg class="guide-rect">
+                                                <rect width="180" height="100"
+                                                    style="fill:rgb(253, 245, 0);stroke-width:3;stroke:rgb(0,0,0)" />
+                                            </svg>
+                                        </div>
+                                        <p class="guide-text"> 不休業災害日</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Endof LEFT: Main calendar  -->
+                <!-- Startof RIGHT: Teamwise calendar  -->
+                <div class="col-lg-6 col-6">
+                    <div class="row">
+                        <% let teams=['PC', 'RRO' ,'PP' ,'FCS' ,'RRA' , 'CI' ] ; %>
+
+                            <% for (let team of teams){ %>
+                                <div class="col-lg-4 col-md-6 col-6">
+                                    <div class="card team-card team-parent-div">
+                                        <div class="team-child-div-1">
+                                            <span class="team-name">
+                                                <%= team %>
+                                            </span>
+                                        </div>
+                                        <%- include('teamwiseCal') %>
+                                    </div>
+                                </div>
+                                <% } %>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 card">
+                            <div class="titleRow row border border-success">
+
+                                <div class="col-lg-12 col-12 bg-success">
+                                    <h5 class="part-title"> 連続無災害日数 </h5>
+                                </div>
+
+                                <div class="col-lg-6 col-6">
+                                    <div class="small-box bg-light border border-success mt-2">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <h4>TYK</h4>
+                                            </div>
+                                            <div class="col-9">
+                                                <p class="count">
+                                                    <span class="tyk_cnt"> 0 </span> 日
+                                                    <span class="nowbadge badge badge-pill badge-danger">現状</span>
+
+                                                    <span class="text-dark"> / </span>
+
+                                                    <span class="text-success tyk_best"> 0 </span>日
+                                                    <span class="bestbadge badge badge-pill badge-success">ベスト</span>
+                                                    <!-- <span class="bestbadge badge badge-pill badge-success">継続記録日数</span> -->
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-6">
+                                    <div class="small-box bg-light border border-success mt-2">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <h5>TYK Group</h5>
+                                            </div>
+                                            <div class="col-9">
+                                                <p class="count">
+                                                    <span class="tykgr_cnt"> 0 </span> 日
+                                                    <span class="nowbadge badge badge-pill badge-danger">現状</span>
+
+                                                    <span class="text-dark"> / </span>
+
+                                                    <span class="text-success tykgr_best"> 0 </span>日
+                                                    <span class="bestbadge badge badge-pill badge-success">ベスト</span>
+                                                    <!-- <span class="bestbadge badge badge-pill badge-success">継続記録日数</span> -->
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 card">
+                            <div class="titleRow row border border-success">
+
+                                <div class="col-lg-12 col-12 bg-success">
+                                    <h5 class="part-title">過去の同月災害情報</h5>
+                                </div>
+
+                                <div class="ml-1 col-lg-12 col-12">
+                                    <div class="row bg-light table-reponsive">
+                                        <table id="tblPastData" class="table table-sm table-bordered">
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Endof RIGHT: Teamwise calendar  -->
+
+            </div>
+        </div>
+
+        <%- include("../../partials/footer") -%>

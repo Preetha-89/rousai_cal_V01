@@ -1,0 +1,79 @@
+<div class="card">
+    <div class="card-body pt-0">
+        <div class="row mainTitleRow">
+            <div class="col-lg-12 col-12 titleCol">
+                <p class="page-title">
+                    今日も一日、ご安全に！！
+                    <!-- みんなで緑 <span class="text-success"><i class="fa fa-plus"></i></span> 字を完成させよう！ -->
+                </p>
+            </div>
+        </div>
+
+        <div class="row monthSelRow month-selector mb-1">
+            <div class="col-lg-1 col-1"></div>
+            <div class="col-lg-1 col-1">
+                <button class="prevBtn btn btn-outline-info btn-sm">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+            </div>
+
+            <div class="col-lg-8 col-8 dateNow">
+                <div class="display-month">
+                    <span class="year">2023</span>
+                    <span>年</span>
+                    <span class="month">04</span>
+                    <span>月 </span>
+                </div>
+            </div>
+
+            <div class="col-lg-1 col-1">
+                <button class="nextBtn btn btn-outline-info btn-sm">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="col-lg-1 col-1"></div>
+        </div>
+
+        <div class="row plusCalRow">
+            <div class="col-lg-12 col-12">
+                <%-include('plus-cal') %>
+            </div>
+        </div>
+
+        <div class="row guideRow">
+            <div class="col-lg-4 col-4">
+                <div class="row">
+                    <div class="col-3">
+                        <svg class="guide-rect">
+                            <rect width="180" height="100"
+                                style="fill:rgb(23, 134, 41);stroke-width:3;stroke:rgb(0,0,0)" />
+                        </svg>
+                    </div>
+                    <p class="guide-text">無災災害日</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-4">
+                <div class="row">
+                    <div class="col-3">
+                        <svg class="guide-rect">
+                            <rect width="180" height="100"
+                                style="fill:rgb(208, 43, 43);stroke-width:3;stroke:rgb(0,0,0)" />
+                        </svg>
+                    </div>
+                    <p class="guide-text">休業災害日</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-4">
+                <div class="row">
+                    <div class="col-3">
+                        <svg class="guide-rect">
+                            <rect width="180" height="100"
+                                style="fill:rgb(253, 245, 0);stroke-width:3;stroke:rgb(0,0,0)" />
+                        </svg>
+                    </div>
+                    <p class="guide-text"> 不休業災害日</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

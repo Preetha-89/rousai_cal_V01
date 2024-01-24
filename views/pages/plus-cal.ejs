@@ -1,0 +1,125 @@
+<div class="calendar">
+    <table class="cal-table">
+        <!-- Row 1 -->
+        <tr class="main-row">
+            <td class="main-col hidden"> </td>
+
+            <td class="main-col show">
+                <table class="cal-part">
+                    <tr class="cal-row">
+                        <td class="cal-col">1</td>
+                        <td class="cal-col">2</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">3</td>
+                        <td class="cal-col">4</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">5</td>
+                        <td class="cal-col">6</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td class="main-col hidden"> </td>
+            <!-- <td class="main-col guide-col"> -->
+            <%- //include('cal-color-guide-part') %>
+                <!-- </td> -->
+        </tr>
+
+        <!-- Row 2 -->
+        <tr class="main-row">
+            <td class="main-col show">
+                <table class="cal-part">
+                    <tr class="cal-row">
+                        <td class="cal-col">7</td>
+                        <td class="cal-col">8</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">13</td>
+                        <td class="cal-col">14</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">19</td>
+                        <td class="cal-col">20</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td class="main-col show">
+                <table class="cal-part">
+                    <tr class="cal-row">
+                        <td class="cal-col">9</td>
+                        <td class="cal-col">10</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">15</td>
+                        <td class="cal-col">16</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">21</td>
+                        <td class="cal-col">22</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td class="main-col show">
+                <table class="cal-part">
+                    <tr class="cal-row">
+                        <td class="cal-col">11</td>
+                        <td class="cal-col">12</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">17</td>
+                        <td class="cal-col">18</td>
+                    </tr>
+                    <tr class="cal-row">
+                        <td class="cal-col">23</td>
+                        <td class="cal-col">24</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- Row 3 -->
+        <tr class="main-row">
+            <td class="main-col hidden"> </td>
+
+            <td class="main-col show">
+                <table class="cal-part">
+                    <tr class="cal-row-f1">
+                        <td class="cal-col-f1">
+                            <table class="cal-part_1">
+                                <tr class="cal-row_1">
+                                    <td class="cal-col cal-col_1">25</td>
+                                    <td class="cal-col cal-col_1">26</td>
+                                </tr>
+                                <tr class="cal-row_1">
+                                    <td class="cal-col cal-col_1">27</td>
+                                    <td class="cal-col cal-col_1">28</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="cal-row-f2">
+                        <td class="cal-col-f2">
+                            <table class="cal-part_2">
+                                <tr class="cal-row_2">
+                                    <td class="cal-col cal-col_2">29</td>
+                                    <td class="cal-col cal-col_2">30</td>
+                                    <td class="cal-col  cal-col_2">31</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td class="main-col hidden"> </td>
+        </tr>
+
+    </table>
+</div>
+
+
+<%- include("./plus-cal-script.ejs") -%>

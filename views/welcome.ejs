@@ -1,0 +1,19 @@
+<%- include("./partials/header") -%>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('#clickMe').click()
+            // window.location.href = url;
+        })
+    </script>
+
+    <body class="hold-transition login-page">
+        <div class="container">
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <h5 class="login-box-msg">ログイン</h5>
+                    If you are not redirected automatically, <a id="clickMe" href="<%= url %>">click here</a>.
+                </div>
+            </div>
+        </div>
+
+        <%- include("./partials/footer") -%>

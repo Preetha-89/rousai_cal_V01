@@ -1,0 +1,63 @@
+<%- include("./partials/header") -%>
+
+    <body class="hold-transition login-page">
+        <div class="login-box">
+            <div class="login-logo">
+                <% if (typeof title!='undefined' ){ %>
+                    <h4 class="text-bold mb-4">
+                        <%= title %>
+                    </h4>
+                    <% } %>
+            </div>
+            <div class="message-box">
+                <% if(typeof message!=='undefined' ) { %>
+                    <span class="message-text">
+                        <input type="hidden" value="<%= message %>" id="message" />
+                        <%= message %>
+                    </span>
+                    <% } %>
+            </div>
+            <!-- /.login-logo -->
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <h5 class="login-box-msg">ログイン</h5>
+                    <form action="/login" method="post">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="ユーザーID"
+                                autocomplete="off">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="パスワード" autocomplete="off">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8"></div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-info btn-block">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <%- include("./partials/footer") %>
+
+            <script>
+                $(function () {
+                    let message = $('#message').val();
+                    if (message) {
+                        $(".message-box").fadeOut(5000);
+                    }
+                })
+            </script>

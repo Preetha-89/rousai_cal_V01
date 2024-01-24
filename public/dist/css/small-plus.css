@@ -1,0 +1,74 @@
+/*-------- Overlap child 1(team name) in the parent div(team card) --------*/
+.team-parent-div {
+  position: relative;
+}
+
+.team-child-div-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* .child_2 {} */
+
+/*---------------------*/
+.team-card {
+  padding: 10px;
+}
+
+.team-name {
+  color: rgb(119, 1, 166);
+  font-size: 2vw;
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+/*-------------------*/
+
+.sm-calendar {
+  /* height: 100%; */
+  /*height changed for android view*/
+  height: 25vh;
+  aspect-ratio: 1/1;
+}
+
+.sm-cal-table {
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 0.5vw;
+  text-align: center;
+  background-color: rgb(218, 218, 218);
+  /* padding-bottom: 10px; */
+  /* border: solid 1px rgb(228, 228, 228); */
+  border-color: inherit !important;
+  margin: auto;
+  aspect-ratio: 1/1;
+}
+
+.sm-main-row {
+  width: 50%;
+}
+
+/* avoid gaps between the cols */
+.sm-main-col {
+  width: 33.33%;
+  height: 33.33%;
+  padding: 0;
+  margin: 0;
+}
+
+table.sm-cal-part {
+  width: 100%;
+  height: 100%;
+}
+
+table.sm-cal-part-first,
+table.sm-cal-part-last {
+  width: 100%;
+  height: 107%;
+}
+
+/* .sm-cal-row {} */
+
+/* .sm-cal-col {} */

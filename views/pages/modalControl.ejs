@@ -1,0 +1,27 @@
+<script>
+
+    function openModal(modalName) {
+        document.getElementById(modalName).style.display = "block";
+        document.getElementById(modalName).classList.add("show");
+    }
+
+    function closeModal(modalName) {
+        document.getElementById(modalName).style.display = "none";
+        document.getElementById(modalName).classList.remove("show");
+
+        let modal = document.getElementById(modalName);
+
+        modal.querySelectorAll("input , textarea , select").forEach((field) => {
+            field.value = "";
+        })
+        modal.querySelectorAll("input[type='checkbox'] , input[type='radio']").forEach((field) => {
+            field.setAttribute('checked', '');
+        })
+
+        const clickedColumns = document.querySelectorAll('.clicked-column');
+        clickedColumns.forEach((col) => {
+            col.classList.remove('clicked-column');
+        })
+    }
+
+</script>

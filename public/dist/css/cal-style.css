@@ -1,0 +1,83 @@
+/*----- Height adjustment for various rows -----*/
+.mainTitleRow {
+  height: 7vh;
+}
+
+.monthSelRow {
+  height: 7vh;
+  margin-top: 0;
+}
+
+.plusCalRow {
+  margin: auto;
+  padding-top: 0;
+  margin-bottom: 0;
+  height: 75vh;
+  aspect-ratio: 1/1;
+}
+
+.guideRow {
+  height: 2vh;
+  font-size: 2vh;
+}
+
+/*--------------------------------------------*/
+.page-title {
+  background-color: rgb(222, 233, 255);
+  font-size: 2.5vw;
+  text-align: center;
+}
+
+/* Month selector */
+.month-selector {
+  padding-top: 1%;
+  text-align: center;
+}
+
+.dateNow {
+  color: rgb(141, 2, 57);
+  font-size: 150%;
+}
+
+.display-month > span {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.guide-rect {
+  margin-top: 1%;
+  width: 2vw;
+  height: 2vh;
+}
+
+/*--------------- Calendar area ------------*/
+.titleRow {
+  padding-top: 0;
+  margin-bottom: 0;
+}
+
+p.part-title {
+  letter-spacing: 0.15em;
+  text-align: left;
+  margin-left: 0;
+}
+
+p.count {
+  font-size: 1.5vw;
+  padding-left: 2vw;
+}
+
+/* #tblPastData {} */
+p.count > span {
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: rgb(3, 3, 194);
+}
+
+span.nowbadge,
+span.bestbadge {
+  height: 15px;
+  width: 42px;
+  font-size: 10px !important;
+  color: white !important;
+}

@@ -1,0 +1,36 @@
+<%- include("../partials/header") -%>
+
+    <body class="light-mode">
+        <%- include("../partials/navbar") -%>
+            <div style="margin-left: 0;" class="content-wrapper">
+                <section class="content">
+                    <div class="container-fluid mt-1 mx-3">
+                        <div class="row">
+                            <div class="col-2">
+                                <button title="災害情報を登録する" id="openForm" type="button"
+                                    class="mt-2 btn btn-block btn-outline-primary">
+                                    災害情報入力
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <%- //include('./show-calendar') %>
+                                    <%- include('accidentDataTable')%>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+    </body>
+
+    <%- include("../partials/footer") -%>
+        <%- include("./modalControl.ejs") -%>
+            <%- include("./modalAddNew.ejs") -%>
+                <%- include("./modalEdit.ejs") -%>
+
+                    <script>
+                        document.getElementById('openForm').addEventListener('click', function () {
+                            openModal('modalAdd');
+                        })
+                    </script>

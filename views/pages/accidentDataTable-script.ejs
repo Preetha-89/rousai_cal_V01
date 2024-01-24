@@ -1,0 +1,77 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        initialLoaderFunction();
+    })
+
+    const loadAccidentInfoTable = async () => {
+        const selYear = document.querySelector('.year').textContent;
+        const selMonth = ('0' + (document.querySelector('.month').textContent)).slice('-2');
+
+        const selectedMonth = `${selYear}-${selMonth}`;
+
+        const getData = await fetch(`/plus-cal/infoMonthly/${selectedMonth}`);
+        const response = await getData.json();
+        const data = response.data;
+        console.log(data)
+
+        let tr = ``;
+
+        if (data != null && data.length > 0) {
+            for (let i = 0; i < data.length; i++) {
+                tr += `<tr>
+                    <td>${i + 1}</td>
+                    <td style="display:none" class="info_entry_id">${data[i].entry_id}</td>
+                    <td>${data[i].date_of_occurance}</td>
+                    <td>${data[i].team_name}</td>
+                    <td>${data[i].accident_type}</td>
+                    <td>${data[i].accident_details}</td>
+                    <td>${data[i].medical_report}</td>
+                    <td>${data[i].remarks}</td>
+                    <td><button type="button" class="btnEditInfo btn btn-sm btn-outline-danger"> 編集</button></td>
+                    </tr>`;
+            }
+        } else {
+            tr += `<tr>
+                <td class="text-center text-red" colspan='7'> No data </td>
+                </tr>`;
+        }
+
+        document.querySelector('table#accidentInfoTable tbody.accidentInfo').innerHTML = tr;
+
+        const editButtons = document.querySelectorAll('table#accidentInfoTable button.btnEditInfo');
+
+        editButtons.forEach((button) => {
+            button.addEventListener('click', async function () {
+                const entryId = this.parentNode.parentElement.querySelector('.info_entry_id').innerText;
+                const getInfoDetails = await fetch(`/plus-cal/infoDetails/${entryId}`);
+                const details = await getInfoDetails.json();
+                const info = details.data;
+
+                const modalEdit = document.querySelector('#modalEdit');
+                modalEdit.querySelector('#e_entry_id').value = entryId;
+                modalEdit.querySelector('#e_sel_date').value = info.date_of_occurance;
+
+                const radios = document.getElementsByName('e_accident_type');
+
+                radios.forEach(radio => {
+                    console.log(radio)
+                    console.log(radio.value);
+                    console.log(info.accident_code)
+                    if (radio.value == info.accident_code) { radio.setAttribute('checked', 'checked') }
+                });
+
+                modalEdit.querySelector('#e_leave_count').value = info.leave_count;
+                modalEdit.querySelector('#e_team_name').value = info.team_id;
+                modalEdit.querySelector('#e_accident_location').value = info.accident_location;
+                modalEdit.querySelector('#e_accident_details').value = info.accident_details;
+                modalEdit.querySelector('#e_medical_report').value = info.medical_report;
+                modalEdit.querySelector('#e_remarks').value = info.remarks;
+
+                openModal('modalEdit');
+            })
+        })
+
+    }
+
+
+</script>

@@ -1,0 +1,19 @@
+<script>
+
+    /* LOAD ALL CONTENT ONE BY ONE */
+    const initialLoaderFunction = async () => {
+
+        if (window.location.href.split('/').pop() == 'hw-cal') {
+            await renderTeamPlus();
+            // await displayCount();
+            await getAchievedCount();
+            await fetchPastData();
+            await renderMainCalendar();
+        } else if (window.location.href.split('/').pop() == 'fw-cal') {
+            await renderMainCalendar();
+        } else if (window.location.href.split('/').pop() == 'dashboard') {
+            await loadAccidentInfoTable();
+        }
+    }
+
+</script>

@@ -1,0 +1,35 @@
+.error-box {
+  background-color: rgb(238, 210, 210);
+  color: rgb(199, 10, 10);
+  margin-left: 200px;
+  width: 500px;
+  height: 25px;
+  font-size: 10px;
+  padding: 5px;
+}
+
+.success-box {
+  background-color: rgb(225, 248, 225);
+  color: rgb(4, 165, 4);
+  width: 500px;
+  margin-left: 200px;
+  height: 25px;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.message-box {
+  text-align: center;
+}
+.message-text {
+  background-color: rgb(238, 210, 210);
+  color: rgb(199, 10, 10);
+}
+/*change border color to red on error*/
+.error {
+  outline: none !important;
+  border-color: red;
+  box-shadow: 0 0 10px red;
+}
+
+/*-------------------------*/

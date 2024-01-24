@@ -1,0 +1,83 @@
+<script>
+    const thisDate = new Date().getDate();
+    const thisMonth = new Date().getMonth() + 1;
+    const thisYear = new Date().getFullYear();
+
+    const today = new Date().toLocaleDateString('ja-JP', {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    })
+
+    // Set current month and year values //
+    document.querySelector('.year').textContent = thisYear;
+    document.querySelector('.month').textContent = thisMonth;
+
+    // prev and next buttons //
+    document.querySelector('.prevBtn').addEventListener('click', async function () {
+        const selYear = document.querySelector('.year').textContent;
+        const selMonth = document.querySelector('.month').textContent;
+        const selectedMonthFirstDay = new Date(`${selYear}/${selMonth}/1`);
+
+        let prevYear = selYear;
+        const prevMonth = new Date(selectedMonthFirstDay.setMonth(selectedMonthFirstDay.getMonth() - 1));
+
+        if (prevMonth.getMonth() + 1 == '12') prevYear = selYear - 1;
+
+        document.querySelector('.year').textContent = prevYear;
+        document.querySelector('.month').textContent = prevMonth.getMonth() + 1;
+
+        initialLoaderFunction();
+    })
+
+    document.querySelector('.nextBtn').addEventListener('click', async function () {
+        const selYear = document.querySelector('.year').textContent;
+        const selMonth = document.querySelector('.month').textContent;
+        const selectedMonthFirstDay = new Date(`${selYear}/${selMonth}/1`);
+
+        const thisYearMonth = new Date().getFullYear() + '' + ('0' + (new Date().getMonth() + 1)).slice(-2);
+        // console.log((selYear + '' + ('0' + selMonth).slice(-2)), thisYearMonth)
+
+        if ((selYear + '' + ('0' + selMonth).slice(-2)) < thisYearMonth) {
+
+            let nextYear = selYear;
+            const nextMonth = new Date(selectedMonthFirstDay.setMonth(selectedMonthFirstDay.getMonth() + 1));
+
+            if (nextMonth.getMonth() + 1 == '12') nextYear = Number(selYear) + 1;
+
+            document.querySelector('.year').textContent = nextYear;
+            document.querySelector('.month').textContent = nextMonth.getMonth() + 1;
+
+            initialLoaderFunction();
+        }
+    })
+
+
+    document.querySelector('.dateNow').addEventListener('click', async function (e) {
+        e.stopImmediatePropagation();
+        document.querySelector('.year').textContent = thisYear;
+        document.querySelector('.month').textContent = thisMonth;
+
+        initialLoaderFunction();
+    })
+
+    // Difference b/w two dates //
+    const dayDifference = (secondDate) => {
+        // const date2 = new Date().getFullYear() + '' + ('0' + (new Date().getMonth() + 1)).slice(-2) + ('0' + new Date().getDate()).slice(-2);
+        // const date1 = new Date(secondDate).getFullYear() + '' + ('0' + (new Date(secondDate).getMonth() + 1)).slice(-2) + ('0' + new Date(secondDate).getDate()).slice(-2);
+        // console.log(date2 - date1);
+        // return (date2 - date1)
+
+        const date2 = new Date();
+        const date1 = new Date(secondDate);
+
+        // To calculate the time difference of two dates
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+
+        // To calculate the no. of days between two dates //
+        // Dont use Math.abs, it will not return negative date difference  //
+        var Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+        return Difference_In_Days;
+    };
+</script>

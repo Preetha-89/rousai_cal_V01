@@ -1,0 +1,152 @@
+<div class="modal" id="modalAdd" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <!-- <div class="modal-dialog" role="document" style="margin-left:10vw;"> -->
+        <div class="modal-content" style="color:white;background-color: rgb(3, 106, 186);">
+            <div class="modal-header">
+                <h5 class="modal-title">災害情報登録</h5>
+                <button type="button" class="close btn-danger text-light" onclick="closeModal('modalAdd')"
+                    data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:rgb(0, 0, 0);background-color: rgb(222, 232, 245);">
+                <div class="row form-group">
+                    <label class="col-3" for="sel_date">日付<span class="text-danger"> ※ </span></label>
+                    <% let d=new Date().toLocaleDateString('ja-JP',{ year:'numeric', month: '2-digit' , day: '2-digit'
+                        }).replace(/\//g, "-" )%>
+
+                        <input type="date" name="sel_date" id="sel_date" class="col-9 form-control" value="<%= d %>" />
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="accident_type">休業状況<span class="text-danger"> ※ </span></label>
+                    <div class="col-9">
+                        <select class="form-control" name="accident_type" id="accident_type">
+                            <option value="1" selected>不休業災害</option>
+                            <option value="2">休業災害</option>
+                            <option value="3">赤チン災害</option>
+                            <option value="4">無傷災害</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:none;" class="row form-group">
+                    <label class="col-3" for="leave_count">休業日数<span class="text-danger"> ※ </span></label>
+                    <input type="number" value="0" name="leave_count" id="leave_count" class="col-9 form-control" />
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="team_name">チーム</label>
+                    <select name="team_name" id="team_name" class="col-9 form-control">
+                        <option value="">--</option>
+                        <%if(typeof teams!='undefined' ){%>
+                            <% for(let i=0; i<teams.length; i++){ %>
+                                <option value="<%= teams[i].team_id %>">
+                                    <%=teams[i].team_name %>
+                                </option>
+                                <% } %>
+                                    <%}%>
+                    </select>
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="accident_location">場所</label>
+                    <input type="text" value="" name="accident_location" id="accident_location"
+                        class="col-9 form-control" />
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="accident_details">詳細情報<span class="text-danger"> ※ </span></label>
+                    <textarea name="accident_details" id="accident_details" class="col-9 form-control"></textarea>
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="medical_report">診断結果</label>
+                    <textarea name="medical_report" id="medical_report" class="col-9 form-control"></textarea>
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="remarks">備考</label>
+                    <textarea name="remarks" id="remarks" class="col-9 form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-success">保存</button>
+                <button onclick="closeModal('modalAdd')" type="button" class="btn btn-danger"
+                    data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#modalAdd").draggable({
+        cursor: "move",
+        handle: ".modal-header",
+        containment: "parent"
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const today = new Date().toLocaleDateString('ja-JP', {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        }).replace(/\//g, '-');
+
+        document.getElementById('sel_date').value = today;
+    })
+
+    document.querySelector("#btnSubmit").addEventListener('click', async function (e) {
+        e.preventDefault();
+
+        const sel_date = document.querySelector("#sel_date").value;
+        const accident_code = document.querySelector("#accident_type").value;
+        const leave_count = document.querySelector('#modalAdd #leave_count').value;
+        const accident_details = document.querySelector('#modalAdd #accident_details').value.trim();
+        const team_id = document.querySelector('#modalAdd #team_name').value;
+        const team_name = document.querySelector(`#modalAdd #team_name option[value='${team_id}']`).innerText.trim();
+        const accident_location = document.querySelector('#modalAdd #accident_location').value.trim();
+        const medical_report = document.querySelector('#modalAdd #medical_report').value.trim();
+        const remarks = document.querySelector('#modalAdd #remarks').value.trim();
+
+        console.log(remarks);
+
+        if (sel_date != "" && accident_code != "" && accident_details != "") {
+            const postNewAccident = await fetch('admin/postNew', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    date: sel_date,
+                    accident_code: accident_code,
+                    leave_count: leave_count,
+                    accident_details: accident_details,
+                    team_id: team_id,
+                    team_name: team_name,
+                    accident_location: accident_location,
+                    medical_report: medical_report,
+                    remarks: remarks
+                })
+            }).then(function (response) {
+                if (response.status == 200) {
+                    Swal.fire({
+                        'icon': 'success',
+                        'text': response.message,
+                        'timer': 1000
+                    })
+
+                    closeModal('modalAdd');
+                    loadAccidentInfoTable()
+                    // location.reload(true);
+                }
+            }).catch(function (error) {
+                if (error.status === 500) {
+                    Swal.fire({
+                        'icon': 'error',
+                        'text': error.message,
+                        'timer': 1000
+                    })
+                }
+            })
+        }
+        else {
+            Swal.fire({ 'icon': 'warning', 'text': '全ての項目を入力してください', 'timer': 2000 })
+        }
+    })
+
+</script>

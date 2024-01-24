@@ -1,0 +1,219 @@
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <!-- <div class="modal-dialog" role="document" style="margin-left:10vw;"> -->
+        <div class="modal-content" style="color:white;background-color: rgb(3, 152, 186);">
+            <div class="modal-header">
+                <button type="button" class="btn btn-sm btn-danger mr-3" id="DelBtn">削除</button>
+                <h5 class="modal-title">災害情報登録</h5>
+                <button type="button" class="ml-5 close btn-danger text-light" onclick="closeModal('modalEdit')"
+                    data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color:rgb(0, 0, 0);background-color: rgb(222, 232, 245);">
+                <input type="hidden" name="e_entry_id" id="e_entry_id" class="col-9 form-control" />
+                <div class="row form-group">
+                    <label class="col-3" for="sel_date">日付<span class="text-danger"> ※ </span></label>
+                    <input type="date" name="e_sel_date" id="e_sel_date" class="col-9 form-control" />
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="e_accident_type">休業状況<span class="text-danger"> ※ </span></label>
+                    <div class="col-9">
+                        <div class="col-9">
+                            <select class="form-control" name="e_accident_type" id="e_accident_type">
+                                <option value="1" selected> 不休業災害</option>
+                                <option value="2"> 休業災害</option>
+                                <option value="3">赤チン災害</option>
+                                <option value="4">無傷災害</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:none;" class="row form-group">
+                    <label class="col-3" for="leave_count">休業日数</label>
+                    <input type="number" value="0" name="e_leave_count" id="e_leave_count" class="col-9 form-control" />
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="team_name">チーム<span class="text-danger"> ※ </span></label>
+                    <select name="e_team_name" id="e_team_name" class="col-9 form-control">
+                        <option value="">--</option>
+                        <%if(typeof teams!='undefined' ){%>
+                            <% for(let i=0; i<teams.length; i++){ %>
+                                <option value="<%= teams[i].team_id %>">
+                                    <%=teams[i].team_name %>
+                                </option>
+                                <% } %>
+                                    <%}%>
+                    </select>
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="accident_location">場所</label>
+                    <input type="text" value="" name="e_accident_location" id="e_accident_location"
+                        class="col-9 form-control" />
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="accident_details">詳細情報<span class="text-danger"> ※ </span></label>
+                    <textarea name="e_accident_details" id="e_accident_details" class="col-9 form-control"></textarea>
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="medical_report">診断結果</label>
+                    <textarea name="e_medical_report" id="e_medical_report" class="col-9 form-control"></textarea>
+                </div>
+                <div class="row form-group">
+                    <label class="col-3" for="remarks">備考</label>
+                    <textarea name="e_remarks" id="e_remarks" class="col-9 form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveEdits" class="btn btn-success">保存</button>
+                <button onclick="closeModal('modalEdit')" type="button" class="btn btn-danger"
+                    data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#modalEdit").draggable({
+        cursor: "move",
+        handle: ".modal-header",
+        containment: "parent"
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const today = new Date().toLocaleDateString('ja-JP', {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        }).replace(/\//g, '-');
+
+        document.getElementById('e_sel_date').value = today;
+    })
+
+    const modalEdit = document.querySelector('#modalEdit');
+
+    modalEdit.querySelector('#DelBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        const entry_id = modalEdit.querySelector("#e_entry_id").value;
+
+        Swal.fire({
+            title: '削除しますか？',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'はい',
+            denyButtonText: `いいえ`,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const postDelete = await fetch('admin/postDelete', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ entry_id: entry_id })
+                }).then(function (response) {
+                    // console.log(response)
+                    if (response.status == 200) {
+                        Swal.fire({
+                            'icon': 'success',
+                            'text': response.message,
+                            'timer': 1000
+                        })
+
+                        closeModal('modalEdit');
+
+                        loadAccidentInfoTable();
+                        // location.reload(true);
+                    }
+
+                }).catch(function (error) {
+                    if (error.status === 500) {
+                        Swal.fire({
+                            'icon': 'error',
+                            'text': error.message,
+                            'timer': 1000
+                        })
+                    }
+                })
+            } else if (result.isDenied) {
+                closeModal('modalEdit');
+            }
+        })
+    })
+
+    modalEdit.querySelector("#btnSaveEdits").addEventListener('click', async function (e) {
+        e.preventDefault();
+
+        const entry_id = modalEdit.querySelector("#e_entry_id").value;
+        const sel_date = modalEdit.querySelector("#e_sel_date").value;
+        const accident_type = document.getElementsByName('e_accident_type');
+
+        let accident_code = '1';
+
+        for (let i = 0; i < accident_type.length; i++) {
+            console.log(accident_type[i].checked)
+            if (accident_type[i].checked == 'true') {
+                accident_code = accident_type[i].value;
+            }
+        }
+
+        // const leave_count = modalEdit.querySelector('#e_leave_count').value;
+        const accident_details = modalEdit.querySelector('#e_accident_details').value.trim();
+        const team_id = modalEdit.querySelector('#e_team_name').value;
+        const team_name = modalEdit.querySelector(`#e_team_name option[value='${team_id}']`).innerText.trim();
+        const accident_location = modalEdit.querySelector('#e_accident_location').value.trim();
+        const medical_report = modalEdit.querySelector('#e_medical_report').value.trim();
+        const remarks = modalEdit.querySelector('#e_remarks').value.trim();
+
+        // console.log(sel_date, accident_code, accident_details, accident_location, team_id, team_name, medical_report, remarks);
+
+        if (sel_date != "" && accident_code != "" && accident_details != "") {
+            const postEdit = await fetch('admin/postEdit', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    entry_id: entry_id,
+                    date: sel_date,
+                    accident_code: accident_code,
+                    // leave_count: leave_count,
+                    accident_details: accident_details,
+                    team_id: team_id,
+                    team_name: team_name,
+                    accident_location: accident_location,
+                    medical_report: medical_report,
+                    remarks: remarks
+                })
+            }).then(function (response) {
+                // console.log(response)
+                if (response.status == 200) {
+                    Swal.fire({
+                        'icon': 'success',
+                        'text': response.message,
+                        'timer': 1000
+                    })
+
+                    closeModal('modalEdit');
+
+                    loadAccidentInfoTable();
+                    // location.reload(true);
+                }
+            }).catch(function (error) {
+                if (error.status === 500) {
+                    Swal.fire({
+                        'icon': 'error',
+                        'text': error.message,
+                        'timer': 1000
+                    })
+                }
+            })
+        }
+        else {
+            Swal.fire({ 'icon': 'warning', 'text': '全ての項目を入力してください', 'timer': 2000 })
+        }
+    })
+
+
+
+</script>

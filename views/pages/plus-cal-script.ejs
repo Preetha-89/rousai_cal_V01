@@ -1,0 +1,125 @@
+<%- include('./dateSelector') %>
+    <%- include('./initialLoader') %>
+
+        <script>
+
+            /* Display dates in each calendar squares */
+            const renderMainCalendar = async () => {
+                const day_columns = document.querySelectorAll('.cal-col');
+
+                day_columns.forEach(async (column) => {
+                    column.classList.remove('green-column', 'red-column', 'yellow-column', 'gray-column', 'today-column');
+
+                    const selYear = document.querySelector('.year').textContent;
+                    const selMonth = ('0' + (document.querySelector('.month').textContent)).slice('-2');
+                    const thisDate = ('0' + (column.textContent)).slice('-2');
+
+                    const selectedDate = `${selYear}-${selMonth}-${thisDate}`;
+
+                    const dayDff = await dayDifference(new Date(selectedDate));
+
+                    if (dayDff === 0) {
+                        column.classList.add('today-column');
+                    } else if (dayDff < 0) {
+                        column.classList.add('gray-column');
+                    } else {
+                        const accidentInfo = await fetchAccidentInfoForDate(selectedDate, null); // teamname set as null 
+
+                        if (accidentInfo == '2') column.classList.add('red-column');
+                        else if (accidentInfo == '1') column.classList.add('yellow-column');
+                        else column.classList.add('green-column');
+                    }
+                })
+            }
+
+            const renderTeamPlus = (() => {
+                const teamCards = document.querySelectorAll('.team-card');
+
+                teamCards.forEach(async (card, index) => {
+                    const teamName = card.querySelector('span.team-name').textContent.trim();
+                    const day_columns = card.querySelectorAll('.sm-cal-col');
+
+                    day_columns.forEach(async (column) => {
+                        column.classList.remove('green-column', 'red-column', 'yellow-column', 'gray-column');
+
+                        const selYear = document.querySelector('.year').textContent;
+                        const selMonth = ('0' + (document.querySelector('.month').textContent)).slice('-2');
+                        const thisDate = ('0' + (column.textContent)).slice('-2');
+
+                        const selectedDate = `${selYear}-${selMonth}-${thisDate}`;
+                        const dayDff = await dayDifference(new Date(selectedDate));
+
+                        if (dayDff == 0) {
+                            column.classList.add('today-column');
+                        }
+
+                        else if (dayDff < 0) {
+                            column.classList.remove('today-column');
+                            column.classList.add('gray-column');
+                        }
+
+                        else {
+                            column.classList.remove('today-column');
+                            const accidentInfo = await fetchAccidentInfoForDate(selectedDate, teamName);
+
+                            if (accidentInfo == '2') column.classList.add('red-column');
+                            else if (accidentInfo == '1') column.classList.add('yellow-column');
+                            else column.classList.add('green-column');
+                        }
+                    })
+                })
+            })
+
+            /* get the accident info for each date */
+            async function fetchAccidentInfoForDate(date, teamName) {
+                const getInfo = await fetch(`/plus-cal/info/${date}/${teamName}`)
+                const response = await getInfo.json();
+
+                return response.info;
+            }
+
+            const getAchievedCount = async () => {
+                const getCount_TYK = await fetch(`plus-cal/count/tyk`);
+                const TYK_reponse = await getCount_TYK.json();
+                document.querySelector('span.tyk_cnt').textContent = TYK_reponse.count
+                document.querySelector('span.tyk_best').textContent = TYK_reponse.bestCnt
+
+                const getCount_TYKGr = await fetch(`plus-cal/count/tyk_gr`);
+                const TYKGr_reponse = await getCount_TYKGr.json();
+                document.querySelector('span.tykgr_cnt').textContent = TYKGr_reponse.count;
+                document.querySelector('span.tykgr_best').textContent = TYKGr_reponse.bestCnt;
+            }
+
+            async function fetchPastData() {
+                const tblPastData = document.querySelector('#tblPastData');
+                const selMonth = ('0' + document.querySelector('.month').textContent).slice(-2);
+
+                const getData = await fetch(`/plus-cal/prevData/${selMonth}`);
+                const response = await getData.json();
+
+                let tr = ``;
+
+                let bgcolor = '';
+
+                if (response.data != null && response.data.length > 0) {
+                    const data = response.data;
+                    for (let i = 0; i < data.length; i++) {
+                        tr += `<tr class="${bgcolor}" style="font-size:1vw">
+                                    <td class="text-center">${data[i].year_of_occurance}</td>
+                                    <td>${data[i].team_name} - ${data[i].accident_location}</td>
+                                    <td>${data[i].accident_details} </td>
+                                </tr>`;
+                    }
+                } else {
+                    tr += `<tr> <td> No data </td> </tr>`;
+                }
+
+                tblPastData.innerHTML = tr;
+            }
+
+            document.addEventListener('DOMContentLoaded', async function (e) {
+                e.stopImmediatePropagation();
+                initialLoaderFunction();
+            }, false);
+
+        </script>

@@ -1,0 +1,23 @@
+<!-- <footer class="main-footer">
+     <strong>Copyright &copy; 2014-2021 TYK </strong>
+     All rights reserved.
+     <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0
+</footer> -->
+
+<%- include('footer-sidebar'); %>
+
+    </body>
+
+    </html>
+
+    <%- include('../functions/loadingWindow'); %>
+        <%- include('../shared/plugin-settings.ejs'); %>
+
+            <script>
+                /*--------- RESET MODAL INPUTS ON CLOSE ----------*/
+                $('.modal').on('hidden.bs.modal', function () {
+                    $(this).find('form').trigger('reset');
+                })
+                /*-------------------------------------------------*/
+            </script>

@@ -1,0 +1,90 @@
+<div class="row">
+    <% let teams=['PC', 'RRO' ,'PP' ,'FCS' ,'RRA' , 'CI' ] ; %>
+
+        <% for (let team of teams){ %>
+            <div class="col-lg-4 col-md-6 col-6">
+                <div class="card team-card team-parent-div">
+                    <div class="team-child-div-1">
+                        <span class="team-name">
+                            <%= team %>
+                        </span>
+                    </div>
+                    <%- include('small-plus') %>
+                </div>
+            </div>
+            <% } %>
+</div>
+
+<div class="row">
+    <div class="col-12 card">
+        <div class="titleRow row border border-success">
+
+            <div class="col-lg-12 col-12 bg-success">
+                <h5 class="part-title"> 連続無災害日数 </h5>
+            </div>
+
+            <div class="col-lg-6 col-6">
+                <div class="small-box bg-light border border-success mt-2">
+                    <div class="row">
+                        <div class="col-3">
+                            <h4>TYK</h4>
+                        </div>
+                        <div class="col-9">
+                            <p class="count">
+                                <span class="tyk_cnt"> 0 </span> 日
+                                <span class="nowbadge badge badge-pill badge-danger">現状</span>
+
+                                <span class="text-dark"> / </span>
+
+                                <span class="text-success tyk_best"> 0 </span>日
+                                <span class="bestbadge badge badge-pill badge-success">ベスト</span>
+                                <!-- <span class="bestbadge badge badge-pill badge-success">継続記録日数</span> -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-6">
+                <div class="small-box bg-light border border-success mt-2">
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>TYK Group</h5>
+                        </div>
+                        <div class="col-9">
+                            <p class="count">
+                                <span class="tykgr_cnt"> 0 </span> 日
+                                <span class="nowbadge badge badge-pill badge-danger">現状</span>
+
+                                <span class="text-dark"> / </span>
+
+                                <span class="text-success tykgr_best"> 0 </span>日
+                                <span class="bestbadge badge badge-pill badge-success">ベスト</span>
+                                <!-- <span class="bestbadge badge badge-pill badge-success">継続記録日数</span> -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 card">
+        <div class="titleRow row border border-success">
+
+            <div class="col-lg-12 col-12 bg-success">
+                <h5 class="part-title">過去の同月災害情報</h5>
+            </div>
+
+            <div class="ml-1 col-lg-12 col-12">
+                <div class="row bg-light table-reponsive">
+                    <table id="tblPastData" class="table table-sm table-bordered">
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
